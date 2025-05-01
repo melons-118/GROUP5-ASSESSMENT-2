@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body id="homeBody">
+
+<div class="topBar">
+  <a href="home.html">Home</a>
+  <a href="products-page.html">Products</a>
+  <a href="newProducts.html">New Products</a>
+  <a href="dashboard.html">Dashboard</a>
+  <button id="logout">Logout</button>
+</div>
+
+<div id="welcome"></div>
+
+  <script>
+    const username = localStorage.getItem("username");
+    if (!username){
+      window.location.href = "login.html";
+    }
+    else{
+      document.getElementById("welcome").innerHTML =" <h1>Welcome, " + username +" </h1>";
+    }
+document.getElementById("logout").addEventListener("click", ()=>{
+     localStorage.removeItem("username");
+     window.location.href = "login.html";
+}) ;   
+  </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="topBar">
+  <a href="home.html" >Home</a>
+  <a href="products-page.html">Products</a>
+  <a href="newProducts.html">New Products</a>
+  <a href="dashboard.html">Dashboard</a>
+  <button id="logout">Logout</button>
+</div>
+
+<div class="table-container">
+  <h2>Product Catalogue</h2>
+  <table id="productTbl" border="1" cellpadding="10" cellspacing="0">
+    <thead>
+      <tr>
+         <th>ID</th>
+         <th>Name</th>
+         <th>Category</th>
+         <th>Quantiy</th>
+         <th>Price</th>
+         <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody></tbody>
+  </table>
+</div>
+
+
+  <script >
+    
+   
+  //control: gotta redirect if not logged in yet
+  const user = localStorage.getItem("username");
+  if(!user) window.location.href ="login.html";
+
+  //for the logout button to work:
+  document.getElementById("logout").addEventListener("click", ()=>{
+    localStorage.removeItem("username");
+    window.location.href = "login.html";
+  });
+ 
+let productList =[];
+  //to get products from local storage:
+  fetch("/products")
+  .then(res => res.json())
+  .then(products => {
+    productList= products;
+    const tbody = document.querySelector("#productTbl tbody");
+    tbody.innerHTML = "";
+
+    products.forEach((prod, index) => {
+      const row = document.createElement("tr");
+      row.innerHTML= `
+        <td>${prod.id}</td>
+        <td>${prod.name}</td>
+        <td>${prod.category}</td>
+        <td>${prod.quantity}</td>
+        <td>${prod.price}</td>
+        <td>
+          <button onclick="editProduct(${index})">Edit</button>
+          <button onclick="deleteProduct(${index})">Delete</button>
+          </td> 
+      `; 
+      tbody.appendChild(row);
+    });
+  });
+
+  //confirmation before deleting a product:
+
+  function deleteProduct(index){
+    const productId = productList[index].id;
+    if(confirm("Are you sure you want to delete this product?")){
+      fetch(`/products/${productId}`, {
+        method: "DELETE"})
+        .then(() => {
+          alert("product deleted successfully");
+          location.reload();
+    })
+        .catch(err => alert("Failed to delete pruduct"));
+    }
+  }
+
+  function editProduct(index){
+    const product = productList[index];
+    localStorage.setItem("editProduct", JSON.stringify(product));
+    window.location.href = "newProducts.html";
+  }
+  </script>
+</body>
+</html>
+
+
+

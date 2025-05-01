@@ -1,0 +1,209 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  
+}
+body{
+  margin-top: 3rem; 
+}
+/*login styles*/ 
+#loginBody{
+  background-color: rgb(205, 224, 250);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.login{
+  display: flex;
+  height: auto;
+  width: 20rem;
+  padding: 1.5rem;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  background-color: white;
+  text-align: center;
+  border-radius: 4.5px;
+
+}
+
+#loginForm > button{
+  width: 100%;
+  color: white;
+  height: 2.5rem;
+  margin: 14px auto;
+  background-color: rgb(17, 98, 211);
+  border: none;
+  cursor: pointer;
+  border-radius: 4.5px;
+  transform: background-color 0.3s ease;
+}
+
+#loginButton:hover{
+  background-color: rgb(17, 98, 211, 0.8);
+}
+
+
+#username, #password{
+  width: 100%;
+  margin: 12px auto;
+  padding: 0.5rem;
+  border-radius: 4.5px;
+  background-color: white;
+  font-size: 1rem;
+  border: solid 3px rgb(188, 184, 184);
+}
+
+/*styles for home page*/
+#homeBody{
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  margin-top: 3rem;
+  
+}
+.topBar{
+  background-color: blue; 
+  height: 3rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 1rem;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  
+}
+#welcome{
+  margin-top: 5rem;
+  padding: 1rem;
+}
+a{
+  text-decoration: none;
+  color: white;
+  font-size: 1.2rem;
+  
+  padding:0.5rem 1rem;
+  display: inline-block ;
+}
+#logout{
+  margin-left: auto;
+  background-color: transparent;
+  border: none;
+  color: white;
+}
+a:hover{
+  background-color: rgb(6, 6, 156);
+
+}
+a.active{
+  background-color: rgb(6, 6, 156);
+}
+
+
+/*styles for newProducts*/ 
+.newProdTitle{
+margin-top: 4rem;
+margin-left: 2rem;
+}
+.prod-form{
+  margin-left: 2rem;
+}
+
+#prodForm{
+  margin-top: 5rem;
+}
+
+/*styles for products*/ 
+.table-container{
+  margin-top: 5rem;
+  padding: 1rem;
+}
+#prodTable{
+  width: 100%;
+  border-collapse: collapse;
+}
+#prodTable th, #prodTable td {
+  padding: 0.5rem;
+  text-align: center;
+}
+.dash-content{
+  padding: 2rem;
+  margin-top: 5rem;
+  text-align: center;
+}
+
+.chart-container{
+  max-width:700px;
+  margin: 0 auto;
+}
+.legend ul{
+  list-style-type: none;
+  padding: 0;
+}
+.legend li{
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+.color-box{
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  display: inline-block;
+  border-radius: 4px;
+}
+.dashPie{
+  margin-top: 2rem;
+}
+#nP> h1, form{
+  margin-left: 2rem;
+}
+form{
+  border-radius: 4.5px;
+  
+}
+form > #category{
+ width: 10.5rem;
+ height: 2rem;
+ background-color: rgb(217, 216, 216);
+ border: none;
+  border-radius: 4.5px;
+ box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+#productName, #category, #quantity,#price{
+  border: solid 2px rgb(177, 172, 172);
+  border-radius: 4.5px;
+}
+#sub{
+  background-color: rgb(15, 87, 229);
+  color: white;
+  border: none;
+  height: 2rem;
+  width: 4rem;
+  border-radius: 0.2rem;
+}
+
+table {
+  margin-top: 2rem;
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 4.5px;
+  overflow: hidden;
+  background-color: #f9f9f9;
+}
+
+table th, table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+table th {
+  background-color: #007bff;
+  color: white;
+}

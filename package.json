@@ -1,0 +1,29 @@
+{
+  "name": "group5",
+  "version": "1.0.0",
+  "description": "package for the system demo",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/melons-118/GROUP5-ASSESSMENT-2.git"
+  },
+  "keywords": [
+    "product",
+    "login",
+    "demo-system",
+    "group5"
+  ],
+  "author": "Angelique Kalanje, Check-Us Mkandawire, Ayanda Simbeye, Mercy Makiyi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/melons-118/GROUP5-ASSESSMENT-2/issues"
+  },
+  "homepage": "https://github.com/melons-118/GROUP5-ASSESSMENT-2#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^3.1.10"
+  }
+}

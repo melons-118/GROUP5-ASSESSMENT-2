@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1746127578368,
+    "name": "Moccasins",
+    "category": "Clothing",
+    "quantity": 12,
+    "price": "12000.00"
+  },
+  {
+    "id": 1746130305858,
+    "name": "Oaimo Headphones",
+    "category": "Electronics",
+    "quantity": 34,
+    "price": "23000.00"
+  },
+  {
+    "id": 1746130333645,
+    "name": "dustBins",
+    "category": "Household",
+    "quantity": 56,
+    "price": "3500.00"
+  },
+  {
+    "id": 1746132424363,
+    "name": "detrex",
+    "category": "Toiletries",
+    "quantity": 34,
+    "price": "2600.00"
+  }
+]

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="styles.css">
+  </head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <body>
+
+    <div class="topBar">
+      <a href="home.html">Home</a>
+      <a href="products-page.html">Products</a>
+      <a href="newProducts.html">New Products</a>
+      <a href="dashboard.html">Dashboard</a>
+      <button id="logout">Logout</button>
+    </div>
+    
+    <div class="dash-content">
+      <h2>Charts</h2>
+      <div class="chart-container">
+        <canvas id="barChart"></canvas>
+        <canvas id="pieChart" class="dashPie"></canvas>
+      </div>
+
+      <div class="legend">
+        <h3>Category Colors</h3>
+        <ul>
+          <li><span class="color-box" style="background-color:#007bff;"></span> Electronics</li>
+          <li><span class="color-box" style="background-color:#28a745;"></span> Clothing</li>
+          <li><span class="color-box" style="background-color:#ffc107;"></span> Household</li>
+          <li><span class="color-box" style="background-color:#fd7e14;"></span> Beverages</li>
+          <li><span class="color-box" style="background-color:#6f42c1;"></span> Toiletries</li>
+          <li><span class="color-box" style="background-color:#e83e8c;"></span> Stationery</li>
+          <li><span class="color-box" style="background-color:#20c997;"></span> Automotive</li>
+          <li><span class="color-box" style="background-color:#343a40;"></span> Hardware</li>
+        </ul>
+      </div>
+    </div> 
+
+      <script>
+        
+        const userr = localStorage.getItem("username");
+//line 52 takes the guys who aint admins back to home page
+if(userr !== "admin") window.location.href = "home.html";
+
+
+//for the logout button to work:
+  document.getElementById("logout").addEventListener("click", ()=>{
+    localStorage.removeItem("username");
+    window.location.href = "login.html";
+  });
+
+          const user = localStorage.getItem("username");
+          if(!user) window.location.href = "login.html"; 
+
+          document.getElementById("logout").addEventListener("click", ()=>{
+            localStorage.removeItem("username");
+            window.location.href = "login.html";
+          });
+
+          const CategoryColors ={
+            Electronics: "#007bff",
+            Clothing: "#28a745",
+            Household: "#ffc107",
+            Beverages: "#fd7e14",
+            Toiletries: "#6f42c1",
+            Stationery: "#e83e8c",
+            Automotive: "#20c997",
+            Hardware: "#343a40"
+          };
+
+          fetch("/products")
+          .then(res => res.json())
+          .then(products => {
+            console.log(products);
+            const CategoryCount ={};
+
+            products.forEach(p => {
+              CategoryCount[p.category] = (CategoryCount[p.category] || 0) + p.quantity;
+            });
+
+            const labels = Object.keys(CategoryCount);
+            const data = Object.values(CategoryCount);
+            const colors = labels.map(cat => CategoryColors[cat] || "#999");
+
+            //for the bar chart:
+            new Chart(document.getElementById("barChart"), {
+              type: "bar",
+              data:{
+                labels,
+                datasets:[{
+                  label: "Product Quantity",
+                  data,
+                  backgroundColor: colors,
+                }]
+              }, 
+              options:{
+                animation: {
+                  duration: 1000,
+                  easing: "easeOutBounce"
+                },
+                title: {
+                  display: true,
+                  text: "Product Categories- Bar Chart"
+                },
+                scales: {
+                  yAxes:[{
+                    ticks:{
+                      beginAtZero: true,
+                      precision: 0
+                    }
+                  }]
+                }
+              }
+            }) ;
+
+            //for the pie chart:
+            new Chart(document.getElementById("pieChart"),{
+              type: "pie",
+              data:{
+                labels,
+                datasets:[{
+                  data,
+                  backgroundColor:colors
+                }]
+              },
+              options:{
+                animation:{duration:1200,
+                  easing:"easeOutCirc"
+                },
+                title:{
+                  display:true,
+                  text:"Product Categories- Pie Chart"
+                }
+              }
+            });
+          });
+      </script>
+  </body>
+  </html>

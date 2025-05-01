@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body >
+<div class="topBar">
+  <a href="home.html" >Home</a>
+  <a href="products-page.html">Products</a>
+  <a href="newProducts.html">New Products</a>
+  <a href="dashboard.html">Dashboard</a>
+  <button id="logout">Logout</button>
+</div>
+
+<h1 class="newProdTitle" id="formTitle">New Product</h1>
+
+<form action="" id="prodForm" class="prod-form">
+
+  <label for="productName">Product Name</label><br>
+  <input type="text" id="productName" name="productName" required><br><br>
+
+  <label for="category">Category</label><br>
+  <select name="category" id="category" required>
+
+    <option value="Electronics">Electronics</option>
+    <option value="Clothing">Clothing</option>
+    <option value="Household">Household</option>
+    <option value="Beverages">Beverages</option>
+    <option value="Toiletries">Toiletries</option>
+    <option value="Stationery">Stationery</option>
+    <option value="Automotive">Automotive</option>
+    <option value="Hardware">Hardware</option>
+
+  </select><br><br>
+
+  <label for="quantity">Quantity</label><br>
+  <input type="number" id="quantity" name="quantity" required><br><br>
+
+  <label for="price">Price</label><br>
+  <input type="text" id="price" name="price" required><br><br>
+  
+  <button type="submit" id="sub">Update</button>
+</form>
+
+
+<script>
+
+const user = localStorage.getItem("username");
+//line 52 takes the guys who aint admins back to home page
+if(user !== "admin") window.location.href = "home.html";
+
+
+//for the logout button to work:
+  document.getElementById("logout").addEventListener("click", ()=>{
+    localStorage.removeItem("username");
+    window.location.href = "login.html";
+  });
+  let productList = [];
+
+fetch("/products")
+  .then(res => res.json())
+  .then(products => {
+    productList = products;
+    
+  })
+
+  const form = document.getElementById("prodForm");
+  const editIndex = localStorage.getItem("editIndex");
+  const title = document.getElementById("formTitle");
+  const subBtn = document.getElementById("sub");
+
+  if (editIndex !== null){
+
+    fetch("/products")
+    .then(res => res.json())
+    .then(products => {
+      const product = products[parseInt(editIndex)];
+      if(product){
+        document.getElementById("productName").value = product.name;
+        document.getElementById("category").value = product.category;
+        document.getElementById("quantity").value = product.quantity;
+        document.getElementById("price").value = product.price;
+
+        title.textContent= "Edit Product";
+        subBtn.textContent= "Update ";
+      }
+    });
+  }
+
+  //for the form submission
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    const name = document.getElementById("productName").value.trim();
+    const category = document.getElementById("category").value;
+    const quantity = parseInt(document.getElementById("quantity").value);
+    const price = document.getElementById("price").value.trim();
+
+    if (!name || !category || isNaN(quantity) || quantity <= 0 || !price) {
+      alert("Please fill in all fields correctly.");
+      return;
+    }
+
+    const product = {
+      name,
+      category,
+      quantity,
+      price : parseFloat(price).toFixed(2)
+    };
+
+    if (editIndex !== null){
+        fetch("/products" + productList[editIndex].id,{
+          method: "PUT",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(product)
+})
+.then(() => {
+  alert("Product updated!");
+  localStorage.removeItem("editIndex");
+  window.location.href = "products-page";
+        });
+      } 
+    else {
+      fetch ("/products", {
+      method : "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(product)
+    })
+    .then(res =>{
+      if (!res.ok) throw new Error ("FAILED TO ADD PRODUCT TO CATALOGUE");
+      alert("PRODUCT ADDED TO CATALOGUE SUCCESSFULLY");
+      document.getElementById("prodForm").reset();
+     })
+     .catch(err =>{
+      console.error(err);
+      alert("AN ERROR OCCURRED WHILE ADDING THE PRODUCT. PLEASE TRY AGAIN.");
+     });
+    }
+  });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const editProduct = JSON.parse(localStorage.getItem("editProduct"));
+  if (editProduct) {
+    document.getElementById("productName").value = editProduct.name;
+    document.getElementById("category").value = editProduct.category;
+    document.getElementById("quantity").value = editProduct.quantity;
+    document.getElementById("price").value = editProduct.price;
+
+    // Update the form title and button text
+    document.getElementById("formTitle").textContent = "Edit Product";
+    document.getElementById("submitButton").textContent = "Update Product";
+  }
+
+  // Clears the editProduct from localStorage after loading
+  localStorage.removeItem("editProduct");
+});
+</script>
+</body>
+</html>
