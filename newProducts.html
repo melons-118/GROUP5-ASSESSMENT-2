@@ -68,26 +68,25 @@ fetch("/products")
   })
 
   const form = document.getElementById("prodForm");
-  const editIndex = localStorage.getItem("editIndex");
+  const editId = localStorage.getItem("editId");
   const title = document.getElementById("formTitle");
   const subBtn = document.getElementById("sub");
 
-  if (editIndex !== null){
-
+  if (editId !== null) {
     fetch("/products")
-    .then(res => res.json())
-    .then(products => {
-      const product = products[parseInt(editIndex)];
-      if(product){
-        document.getElementById("productName").value = product.name;
-        document.getElementById("category").value = product.category;
-        document.getElementById("quantity").value = product.quantity;
-        document.getElementById("price").value = product.price;
+      .then(res => res.json())
+      .then(products => {
+        const product = products.find(p => p.id == editId);
+        if (product) {
+          document.getElementById("productName").value = product.name;
+          document.getElementById("category").value = product.category;
+          document.getElementById("quantity").value = product.quantity;
+          document.getElementById("price").value = product.price;
 
-        title.textContent= "Edit Product";
-        subBtn.textContent= "Update ";
-      }
-    });
+          title.textContent = "Edit Product";
+          subBtn.textContent = "Update";
+        }
+      });
   }
 
   //for the form submission
@@ -108,22 +107,21 @@ fetch("/products")
       name,
       category,
       quantity,
-      price : parseFloat(price).toFixed(2)
+      price: parseFloat(price).toFixed(2)
     };
 
-    if (editIndex !== null){
-        fetch("/products/" + productList[editIndex].id,{
-          method: "PUT",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(product)
-})
-.then(() => {
-  alert("Product updated!");
-  localStorage.removeItem("editIndex");
-  window.location.href = "products-page";
-        });
-      } 
-    else {
+    if (editId !== null) {
+      fetch("/products/" + editId, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(product)
+      })
+      .then(() => {
+        alert("Product updated!");
+        localStorage.removeItem("editId");
+        window.location.href = "products-page.html";
+      });
+    } else {
       fetch ("/products", {
       method : "POST",
       headers: { "Content-Type": "application/json" },
@@ -157,6 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Clears the editProduct from localStorage after loading
   localStorage.removeItem("editProduct");
 });
+
 </script>
 </body>
 </html>
