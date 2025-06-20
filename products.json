@@ -26,5 +26,26 @@
     "category": "Toiletries",
     "quantity": 34,
     "price": "2600.00"
+  },
+  {
+    "id": 1750403753850,
+    "name": "Powerbank",
+    "category": "Electronics",
+    "quantity": 23,
+    "price": "34000.00"
+  },
+  {
+    "id": 1750403776948,
+    "name": "Dettol",
+    "category": "Toiletries",
+    "quantity": 34,
+    "price": "2600.00"
+  },
+  {
+    "id": 1750404344972,
+    "name": "Bluetooth Speaker",
+    "category": "Electronics",
+    "quantity": 23,
+    "price": "45000.00"
   }
 ]

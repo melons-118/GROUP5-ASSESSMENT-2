@@ -112,7 +112,7 @@ fetch("/products")
     };
 
     if (editIndex !== null){
-        fetch("/products" + productList[editIndex].id,{
+        fetch("/products/" + productList[editIndex].id,{
           method: "PUT",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify(product)
